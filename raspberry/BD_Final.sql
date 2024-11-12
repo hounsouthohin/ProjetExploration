@@ -12,7 +12,7 @@ CREATE TABLE Utilisateur(
     pseudo  VARCHAR(50)  NOT NULL,
     mdp     VARCHAR(100) NOT NULL,
     mail    VARCHAR(50)  NOT NULL,
-	CONSTRAINT FK_UtilisateurRole FOREIGN KEY(role_id) 
+	CONSTRAINT FK_UtilisateurRole FOREIGN KEY(role_id)
 	REFERENCES RoleUtilisateur(role_id)
 );
 
@@ -23,9 +23,6 @@ CREATE TABLE Statistiques(
     moyTemp     INT NULL
 );
 
-
-
-
 CREATE TABLE UserAttempt(
     noUser       INT      NOT NULL,
     last_attempt DATETIME NOT NULL,
@@ -33,4 +30,4 @@ CREATE TABLE UserAttempt(
     blocked      BIT      NOT NULL,
     CONSTRAINT   FK_Utilisateur  FOREIGN KEY (noUser)
 	REFERENCES Utilisateur(noUser)
-) ;
+);

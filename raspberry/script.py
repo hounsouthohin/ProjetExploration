@@ -1,5 +1,9 @@
 import ressources.LCD1602 as LCD1602
+import RPi.GPIO as GPIO
 import time
+
+DHTPIN = 17
+GPIO.setmode(GPIO.BCM)
 
 def setup():
 	LCD1602.init(0x27, 1)	# init(slave address, background light)
