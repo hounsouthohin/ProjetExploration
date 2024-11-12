@@ -1,0 +1,14 @@
+Notes pour le projet
+
+*creation environnement git : deux sous-dossers- Projet python et web
+
+*creation du site web
+	-page connexion : nb tentatives,  syst de role(admin,visiteur,utilisateur)
+		admin : voir et supprimer users; modifier roles
+		Protection contre injection SQL
+
+	-page inscription : confirmer que user n'existe pas deja
+
+	-page admin
+
+	- deux pages de donnees statistiques
