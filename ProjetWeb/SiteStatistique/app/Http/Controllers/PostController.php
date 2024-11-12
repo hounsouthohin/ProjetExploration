@@ -1,42 +1,26 @@
 <?php
 
 namespace App\Http\Controllers;
- 
+use Illuminate\Support\Facades;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
 
 class PostController extends Controller
 {
-     /**
-     * Show the form to create a new blog post.
-     */
-
-    public function createInscription(): View
-    {
-        return view('inscription');
-    }
-
-    public function createConnexion(): View
-    {
-        return view('connexion');
-    }
-
-     /**
-     * Store a new blog post.
-     */
-    public function store(Request $request): RedirectResponse
+    public function connexionPost(Request $request): RedirectResponse
     {
         // Validate and store the blog post...
 
-        $validatedData = $request->validateWithBag('post', [
-            'courriel' => ['bail', 'required', 'unique:posts', 'max:5'],
-            'MotDePasse' => ['required'],
+        $request->validate([
+            'courriel' => ['bail', 'required', 'unique:posts', 'max:20'],
+            'motDePasse' => ['required','max:50'],
         ]);
-
-        // The blog post is valid...
- 
-        return redirect('/connexion');
+        $credentials = $request->Only('courriel','motDePasse');
+        if(Auth::attempt($credentials)){
+            return redirect()->itended(route('welcome'));
+        }
+        return redirect()->itended(route('connexion'))->with('error','connexion échouee;veuillez reessayer');
     }
 }
 

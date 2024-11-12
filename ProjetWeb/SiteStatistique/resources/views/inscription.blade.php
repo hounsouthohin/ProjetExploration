@@ -5,33 +5,53 @@
 @section("rappel","Se rappeler de moi")
 @section("mot de passe","Mot de passe")
 @section("bouton","S'inscrire")
-
+@section("pseudo","Pseudo")
 @section('content')
 
-<form method="POST" action="{{ url('/inscription') }}">
 
+<div class="container">
+  <div class = "mt-5">
+  @if($errors->any())
+    <div class="col-12">
+    @foreach($errors->all() as $error)
+      <div class="alert alert-danger">{{$error}}</div>
+    </div>
+    @endforeach
+  </div>
+</div>
+  @endif
+
+  @if(session()->has('error'))
+  <div class="alert alert-danger col-12">{{session('error')}}</div>
+  @endif
+
+  @if(session()->has('success'))
+  <div class="alert alert-success col-12">{{session('success')}}</div>
+  @endif
+
+<form method="POST" action="{{ route('inscription.post') }}" >
+  
     @method('post')
     @csrf
     <img class="mb-4 img-fluid rounded" src="{{asset('img/logo.jpg')}}" alt="" width="72" height="57">
     <h1 class="h3 mb-3 fw-normal">@yield("entete","valeur")</h1>
 
     <div class="form-floating mb-4">
-      <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="courriel">
-      @if ($errors->has('courriel'))
-          <span class="text-danger">
-              {{$errors->first('courriel')}}
-          </span>
-      @endif
+      <input type="text" class="form-control" id="floatingInput" placeholder="gobli23" name="pseudo">
+      
+
+      <label for="floatingInput">@yield("pseudo","valeur")</label></div>
+    <div class="form-floating mb-4">
+      <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email">
+      
       
 
       <label for="floatingInput">@yield("adresse","valeur")</label>
     </div>
 
     <div class="form-floating">
-        <input type="password" class="form-control" id="floatingPassword" placeholder="Mot de Passe" name="motDePasse">
-        @if ($errors->has("motDePasse"))
-            <span class="text-danger">{{$errors->first("motDePasse")}}</span>
-        @endif
+        <input type="password" class="form-control" id="floatingPassword" placeholder="Mot de Passe" name="password">
+        
         
       <label for="floatingPassword">@yield("mot de passe","valeur")</label>
     </div>

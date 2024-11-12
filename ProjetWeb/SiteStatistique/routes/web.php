@@ -4,12 +4,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\PostController;
 
-Route::get('/',[AuthController::class,'welcome']);
+Route::get('/',[AuthController::class,'welcome'])->name('welcome');
 
-Route::get('/connexion',[AuthController::class,'connexion']);
-
-Route::get('/inscription',[AuthController::class,'inscription']);
-
+Route::get('/connexion',[AuthController::class,'connexion'])->name('connexion');
+Route::post('/connexion',[AuthController::class,'connexionPost'])->name('connexion.post');
+Route::get('/inscription',[AuthController::class,'inscription'])->name('inscription');
+Route::post('/inscription',[AuthController::class,'inscriptionPost'])->name('inscription.post');
+Route::get('/logout',[AuthController::class,'logout'])->name('logout');
 
  
 /*Route::post('/connexion', [PostController::class, 'store']);
