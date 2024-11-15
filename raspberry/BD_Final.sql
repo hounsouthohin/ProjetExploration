@@ -1,3 +1,5 @@
+DROP DATABASE IF EXISTS BD_Final;
+
 CREATE DATABASE BD_Final;
 USE BD_Final;
 
@@ -8,7 +10,7 @@ CREATE TABLE RoleUtilisateur(
 
 CREATE TABLE Utilisateur(
 	role_id INT          NOT NULL,
-    noUser  INT          NOT NULL   IDENTITY(0,1) PRIMARY KEY,
+    noUser  INT          NOT NULL   AUTO_INCREMENT PRIMARY KEY,
     pseudo  VARCHAR(50)  NOT NULL,
     mdp     VARCHAR(100) NOT NULL,
     mail    VARCHAR(50)  NOT NULL,
