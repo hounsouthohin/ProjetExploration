@@ -1,19 +1,46 @@
 import ressources.LCD1602 as LCD1602
 import RPi.GPIO as GPIO
 import time
-import mysql.connector as connector
+
+import mysql.connector
+from mysql.connector import Error
 
 DHTPIN = 17
 GPIO.setmode(GPIO.BCM)
 
-mybd = connector.connect(
-	host = "localhost",
-	user = "root",
-	password = "cegep",
-	database = "BD_Final"
-)
+def create_server_connection(host_name, user_name, user_password, db_name):
+    connection = None
+    try:
+        connection = mysql.connector.connect(
+            host=host_name,
+            user=user_name,
+            passwd=user_password,
+            database=db_name
+        )
+        print("MySQL Database connection successful")
+    except Error as err:
+        print(f"Error: '{err}'")
 
-mycursor = mybd.cursor()
+    return connection
+
+connection = create_server_connection("localhost", "root", "cegep", "BD_Final")
+
+def execute_query(connection, query):
+    cursor = connection.cursor()
+    try:
+        cursor.execute(query)
+        print(cursor.fetchall())
+        print("ok")
+    except Error as err:
+        print(f"Error: '{err}'")
+
+#afficher_role = "INSERT INTO RoleUtilisateur(role_name) VALUES('admin')"
+#execute_query(connection, afficher_role)
+
+afficher_role = "SELECT * FROM RoleUtilisateur"
+execute_query(connection, afficher_role)
+
+
 
 """MAX_UNCHANGE_COUNT = 100
 

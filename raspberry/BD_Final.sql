@@ -4,7 +4,7 @@ CREATE DATABASE BD_Final;
 USE BD_Final;
 
 CREATE TABLE RoleUtilisateur(   
-	role_id     INT          NOT NULL PRIMARY KEY,
+	role_id     INT          NOT NULL   AUTO_INCREMENT PRIMARY KEY,
     role_name   VARCHAR(50)  NOT NULL
 );
 
