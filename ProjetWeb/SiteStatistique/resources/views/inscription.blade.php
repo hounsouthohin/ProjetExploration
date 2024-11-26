@@ -5,7 +5,7 @@
 @section("rappel","Se rappeler de moi")
 @section("mot de passe","Mot de passe")
 @section("bouton","S'inscrire")
-@section("pseudo","Pseudo")
+@section("Nom","Nom")
 @section('content')
 
 
@@ -37,10 +37,10 @@
     <h1 class="h3 mb-3 fw-normal">@yield("entete","valeur")</h1>
 
     <div class="form-floating mb-4">
-      <input type="text" class="form-control" id="floatingInput" placeholder="gobli23" name="pseudo">
+      <input type="text" class="form-control" id="floatingInput" placeholder="gobli23" name="name">
       
 
-      <label for="floatingInput">@yield("pseudo","valeur")</label></div>
+      <label for="floatingInput">@yield("Nom","valeur")</label></div>
     <div class="form-floating mb-4">
       <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="email">
       

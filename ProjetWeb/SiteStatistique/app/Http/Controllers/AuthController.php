@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Session;
 
 use App\Models\User;
 class AuthController extends Controller
@@ -19,6 +20,14 @@ class AuthController extends Controller
         return view("inscription");
     }
 
+    public function stat1(){return view("stat1");}
+
+    public function stat2(){return view("stat2");}
+
+    public function admin(){
+        return view("admin");
+    }
+
     public function connexionPost(Request $request)
     {
         // Validate and store the blog post...
@@ -29,32 +38,54 @@ class AuthController extends Controller
         ]);
         $credentials = $request->Only('email','password');
         if(Auth::attempt($credentials)){
-            return redirect()->route('inscription');
+            
+            return redirect()->route('welcome');
+            
         }
-        return redirect()->route('inscription')->with('error','connexion échouee;veuillez reessayer');
+        return redirect()->route('connexion')->with('error','connexion échouee;veuillez reesayez');
     }
 
-    public function inscriptionPost(Request $request){
-        
+    public function inscriptionPost(Request $request)
+    {
+        // Validation des données d'inscription
         $request->validate([
-            'email' => ['bail', 'required','email','unique:utilisateurs'],
+            'email' => ['bail', 'required', 'email', 'unique:utilisateurs'],
             'password' => ['required'],
-            'pseudo' => ['required']
+            'name' => ['required']
         ]);
 
-        $data['email'] = $request->email;
-        $data['password'] = Hash::make($request->password);
-        $data['pseudo'] = $request->pseudo;
-        
-        $user = User::create($data); /* Utilisation du model User pour avoir acces a la BD sans requete*/
+        // Données de l'utilisateur
+        $data = [
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'name' => $request->name
+        ];
 
-        if(!$user){
-            return redirect()->route('inscription')->with('error','Inscription échouee;veuillez reessayer');
+        // Créer l'utilisateur dans la base de données
+        $user = User::create($data);
+
+        // Vérifier si l'utilisateur a été créé avec succès
+        if (!$user) {
+            return redirect()->route('inscription')->with('error', 'Inscription échouée, veuillez réessayer');
         }
 
-        return redirect()->route('connexion')->with('success','Inscription Reussie');
+        // Définir le rôle par défaut pour les utilisateurs
+        // Par défaut, tous les utilisateurs auront le rôle "utilisateur"
+        $role = 'utilisateur';
+
+        // Si l'email correspond à un utilisateur spécifique, assigner le rôle "admin"
+        if ($request->email === 'admin@example.com') {
+            $role = 'admin';
+        }
+
+        // Assigner le rôle à l'utilisateur
+        $user->assignRole($role);
+        dd($user->getRoleNames()); // Affiche les rôles de l'utilisateur
+        // Rediriger avec un message de succès
+        return redirect()->route('connexion')->with('success', 'Inscription réussie');
+       
+
     }
-     
     /*fonction pour la deconnexion*/
     public function deconnexion(){ 
         Session::flush();
