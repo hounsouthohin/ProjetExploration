@@ -33,3 +33,28 @@ CREATE TABLE UserAttempt(
     CONSTRAINT   FK_Utilisateur  FOREIGN KEY (noUser)
 	REFERENCES Utilisateur(noUser)
 );
+
+
+
+USE BD_Final;
+DROP TRIGGER IF EXISTS FaireMoyenne;
+
+DELIMITER $$
+
+CREATE TRIGGER FaireMoyenne
+AFTER INSERT ON Statistiques
+FOR EACH ROW
+BEGIN
+    DECLARE moyenne DECIMAL(5,2);  -- Utilisation de DECIMAL pour la moyenne
+    -- Calcul de la moyenne de l'humidité
+    SELECT AVG(humidite) INTO moyenne FROM Statistiques;
+    -- Insertion de la moyenne dans la table Statistiques
+    UPDATE Statistiques SET moyHum = moyenne;
+    
+    -- Calcul de la moyenne de la température
+    SELECT AVG(temperature) INTO moyenne FROM Statistiques;
+    -- Insertion de la moyenne dans la table Statistiques
+    UPDATE Statistiques SET moyTemp = moyenne;
+END$$
+
+DELIMITER ;

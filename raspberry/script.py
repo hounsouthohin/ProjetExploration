@@ -1,9 +1,10 @@
 import ressources.LCD1602 as LCD1602
 import RPi.GPIO as GPIO
 import time
-
 import mysql.connector
 from mysql.connector import Error
+
+"""mettre num de table pour statistique + mettre un WHERE sur les update du trigger"""
 
 DHTPIN = 17
 GPIO.setmode(GPIO.BCM)
@@ -25,24 +26,26 @@ def create_server_connection(host_name, user_name, user_password, db_name):
 
 connection = create_server_connection("localhost", "root", "cegep", "BD_Final")
 
-def execute_query(connection, query):
+def insert_data(connection, query):
     cursor = connection.cursor()
     try:
         cursor.execute(query)
-        print(cursor.fetchall())
+        cursor.fetchall()
         print("ok")
     except Error as err:
         print(f"Error: '{err}'")
 
-#afficher_role = "INSERT INTO RoleUtilisateur(role_name) VALUES('admin')"
-#execute_query(connection, afficher_role)
+def afficher_moy(connection, query):
+    cursor = connection.cursor()
+    try:
+        cursor.execute(query)
+        return cursor.fetchall()        
+    except Error as err:
+        print(f"Error: '{err}'")
 
-afficher_role = "SELECT * FROM RoleUtilisateur"
-execute_query(connection, afficher_role)
 
 
-
-"""MAX_UNCHANGE_COUNT = 100
+MAX_UNCHANGE_COUNT = 100
 
 STATE_INIT_PULL_DOWN = 1
 STATE_INIT_PULL_UP = 2
@@ -50,10 +53,10 @@ STATE_DATA_FIRST_PULL_DOWN = 3
 STATE_DATA_PULL_UP = 4
 STATE_DATA_PULL_DOWN = 5
 
-def setup():
+def setup(moyHum, moyTemp):
 	LCD1602.init(0x27, 1)	# init(slave address, background light)
-	LCD1602.write(0, 0, 'Greetings!!')
-	LCD1602.write(1, 1, 'from HiPi.io')
+	LCD1602.write(0, 0, moyHum)
+	LCD1602.write(1, 0, moyTemp)
 	time.sleep(2)
 
 def lireCapteur():
@@ -157,15 +160,23 @@ def lireCapteur():
 
 try:
 	setup()
+	compteur = 0
+	moyTemp = 0.0
+	moyHum = 0.0
 	while True:
 		result = lireCapteur()
-		compteur = 0
 		compteur += 1
 
 		if result:
 			humidity, temperature = result
 			print ("humidity: %s %%,  Temperature: %s °C" % (humidity, temperature))
+			query = ("INSERT INTO Statistique(humidite, temperature) VALUES (%s, %s)"(humidity, temperature))
+			insert_data(connection, query)
 		time.sleep(1)
+		if compteur == 60:
+			compteur = 0
+			query = ("SELECT moyTemp FROM ")
+
 		
 except KeyboardInterrupt:
-	exit()"""
+	exit()
