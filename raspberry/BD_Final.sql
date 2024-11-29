@@ -19,8 +19,13 @@ CREATE TABLE Utilisateur(
 );
 
 CREATE TABLE Statistiques(
+    noStat      INT NOT NULL    AUTO_INCREMENT PRIMARY KEY,
     humidite    INT NULL,
-    temperature INT NULL,
+    temperature INT NULL
+);
+
+CREATE TABLE Moyennes(
+    noMoy       INT NOT NULL    AUTO_INCREMENT PRIMARY KEY,
     moyHum      INT NULL,
     moyTemp     INT NULL
 );
@@ -36,7 +41,7 @@ CREATE TABLE UserAttempt(
 
 
 
-USE BD_Final;
+
 DROP TRIGGER IF EXISTS FaireMoyenne;
 
 DELIMITER $$
@@ -49,12 +54,14 @@ BEGIN
     -- Calcul de la moyenne de l'humidité
     SELECT AVG(humidite) INTO moyenne FROM Statistiques;
     -- Insertion de la moyenne dans la table Statistiques
-    UPDATE Statistiques SET moyHum = moyenne;
+    UPDATE Moyennes SET moyHum = moyenne
+    WHERE noMoy = 1;
     
     -- Calcul de la moyenne de la température
     SELECT AVG(temperature) INTO moyenne FROM Statistiques;
     -- Insertion de la moyenne dans la table Statistiques
-    UPDATE Statistiques SET moyTemp = moyenne;
+    UPDATE Moyennes SET moyTemp = moyenne
+    WHERE noMoy = 1;
 END$$
 
 DELIMITER ;
