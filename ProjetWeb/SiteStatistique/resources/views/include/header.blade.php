@@ -12,6 +12,7 @@
         <li class="nav-item">
           <a class="nav-link" href="connexion">Connexion</a>
         </li>
+        <li class="nav-item"><a href="{{route('logout')}}" class="nav-link px-2">DeConnexion</a></li>
         <li class="nav-item">
           <a class="nav-link" href="inscription">Inscription</a>
         </li>

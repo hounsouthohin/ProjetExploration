@@ -49,7 +49,7 @@ class AuthController extends Controller
     {
         // Validation des données d'inscription
         $request->validate([
-            'email' => ['bail', 'required', 'email', 'unique:utilisateurs'],
+            'email' => ['bail', 'required', 'email', 'unique:users'],
             'password' => ['required'],
             'name' => ['required']
         ]);
@@ -80,7 +80,7 @@ class AuthController extends Controller
 
         // Assigner le rôle à l'utilisateur
         $user->assignRole($role);
-        dd($user->getRoleNames()); // Affiche les rôles de l'utilisateur
+        //dd($user->getRoleNames()); // Affiche les rôles de l'utilisateur
         // Rediriger avec un message de succès
         return redirect()->route('connexion')->with('success', 'Inscription réussie');
        
@@ -90,6 +90,6 @@ class AuthController extends Controller
     public function deconnexion(){ 
         Session::flush();
         Auth::logout();
-        return redirect()->itended(route('connexion'));
+        return redirect()->route('connexion');
     }
 }
