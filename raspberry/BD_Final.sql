@@ -26,8 +26,8 @@ CREATE TABLE Statistiques(
 
 CREATE TABLE Moyennes(
     noMoy       INT NOT NULL    AUTO_INCREMENT PRIMARY KEY,
-    moyHum      INT NULL,
-    moyTemp     INT NULL
+    moyHum      DECIMAL(5,2) NULL,
+    moyTemp     DECIMAL(5,2) NULL
 );
 
 CREATE TABLE UserAttempt(
@@ -65,3 +65,5 @@ BEGIN
 END$$
 
 DELIMITER ;
+
+INSERT INTO Moyennes(moyHum, moyTemp) VALUES (0.0, 0.0);

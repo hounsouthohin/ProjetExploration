@@ -40,8 +40,8 @@ def afficher_moy(connection, query):
     cursor = connection.cursor()
     try:
         cursor.execute(query)
-        print (cursor.fetchall())   
-        return cursor.fetchall()        
+        for row in cursor:
+            return float(row[0]) 
     except Error as err:
         print(f"Error: '{err}'")
 
@@ -56,10 +56,12 @@ STATE_DATA_PULL_UP = 4
 STATE_DATA_PULL_DOWN = 5
 
 def setup (moyHum = 0, moyTemp = 0):
-	LCD1602.init(0x27, 1)	# init(slave address, background light)
-	LCD1602.write(0, 0, f"Moy Hum {moyHum}%")
-	LCD1602.write(0, 1, f"Moy Temp {moyTemp}°c")
-	time.sleep(2)
+    LCD1602.init(0x27, 1)
+    print(f"Moy Hum {float(moyHum)}%")
+    LCD1602.write(0, 0, f"Moy Hum {float(moyHum)}%")
+    LCD1602.write(0, 1, f"Moy Temp {float(moyTemp)}°c")
+    time.sleep(2)
+    
 
 def lireCapteur():
     # Begin start sequence
@@ -181,13 +183,12 @@ try:
             query = (f"INSERT INTO Statistiques(humidite, temperature) VALUES ({humidity},{temperature})")
             insert_data(connection, query)
         time.sleep(1)
-        if compteur == 60:
+        if compteur == 10:
             compteur = 0
             query = ("SELECT moyTemp FROM Moyennes WHERE noMoy = 1")
             moyTemp = afficher_moy(connection, query)
             query = ("SELECT moyHum FROM Moyennes WHERE noMoy = 1")
             moyHum = afficher_moy(connection, query)
-            
             setup(moyHum, moyTemp)
 
 		
