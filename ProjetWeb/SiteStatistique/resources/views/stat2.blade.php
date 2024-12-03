@@ -159,7 +159,7 @@
             <table class="table table-bordered text-center">
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th>Id</th>
                         <th>Température (°C)</th>
                     </tr>
                 </thead>
@@ -172,6 +172,7 @@
                     @endforeach
                 </tbody>
             </table>
+            <div>Moyenne : {{$moyTemp}}</div> 
         </div>
     </div>
 

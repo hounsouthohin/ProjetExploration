@@ -8,7 +8,10 @@
 @section('content')
 
 
-<div class="container">
+
+
+
+<div class="container w-6">
   <div class = "mt-5">
   @if($errors->any())
     <div class="col-12">
@@ -38,13 +41,15 @@
       <label for="floatingInput">@yield("adresse","valeur")</label>
     </div>
 
-    <div class="form-floating">
+    <div class="form-floating mb-3">
         <input type="password" class="form-control" id="floatingPassword" placeholder="Mot de Passe" name="password">
-        
-        
       <label for="floatingPassword">@yield("mot de passe","valeur")</label>
     </div>
     <button class="btn btn-primary w-100 py-2" type="submit">@yield("bouton","valeur")</button>
-    <p class="mt-5 mb-3 text-body-secondary">&copy; Cegep de Jonquiere 2024–2025</p>
+    <div class="text-center mt-3">
+        <p class="mb-1">Vous n'avez pas de compte?</p>
+        <a href="{{ route('inscription') }}" class="btn btn-link">Créer un compte</a>
+      </div>
+    <p class="mt-5 mb-3 text-body-secondary text-center">&copy; Cegep de Jonquiere 2024–2025</p>
   </form>
-@endsection
+  @endsection

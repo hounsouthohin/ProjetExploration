@@ -101,7 +101,7 @@
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>#</th>
+                        <th>Id</th>
                         <th>Humidité (%)</th>
                     </tr>
                 </thead>
@@ -114,6 +114,7 @@
                     @endforeach
                 </tbody>
             </table>
+           <div>Moyenne : {{$moyHum}}</div> 
         </div>  
     </div>
 

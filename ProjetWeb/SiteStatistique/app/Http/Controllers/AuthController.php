@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 class AuthController extends Controller
 {
     public function welcome(){
@@ -20,13 +21,20 @@ class AuthController extends Controller
         return view("inscription");
     }
 
-    public function stat1(){return view("stat1");}
 
-    public function stat2(){return view("stat2");}
+    public function stat2()
+    {       
+            return view('stat2');
+    }
+    
+
+    public function stat1(){return view("stat1");}
 
     public function admin(){
         return view("admin");
     }
+
+    public function securite(){return view("securite");}
 
     public function connexionPost(Request $request)
     {
