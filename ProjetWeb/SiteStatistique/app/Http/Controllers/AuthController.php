@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 
 use App\Models\User;
+use Spatie\Permission\Models\Role;
 class AuthController extends Controller
 {
     public function welcome(){
@@ -20,13 +21,20 @@ class AuthController extends Controller
         return view("inscription");
     }
 
-    public function stat1(){return view("stat1");}
 
-    public function stat2(){return view("stat2");}
+    public function stat2()
+    {       
+            return view('stat2');
+    }
+    
+
+    public function stat1(){return view("stat1");}
 
     public function admin(){
         return view("admin");
     }
+
+    public function securite(){return view("securite");}
 
     public function connexionPost(Request $request)
     {
@@ -49,7 +57,7 @@ class AuthController extends Controller
     {
         // Validation des données d'inscription
         $request->validate([
-            'email' => ['bail', 'required', 'email', 'unique:utilisateurs'],
+            'email' => ['bail', 'required', 'email', 'unique:users'],
             'password' => ['required'],
             'name' => ['required']
         ]);
@@ -80,7 +88,7 @@ class AuthController extends Controller
 
         // Assigner le rôle à l'utilisateur
         $user->assignRole($role);
-        dd($user->getRoleNames()); // Affiche les rôles de l'utilisateur
+        //dd($user->getRoleNames()); // Affiche les rôles de l'utilisateur
         // Rediriger avec un message de succès
         return redirect()->route('connexion')->with('success', 'Inscription réussie');
        
@@ -90,6 +98,6 @@ class AuthController extends Controller
     public function deconnexion(){ 
         Session::flush();
         Auth::logout();
-        return redirect()->itended(route('connexion'));
+        return redirect()->route('connexion');
     }
 }
