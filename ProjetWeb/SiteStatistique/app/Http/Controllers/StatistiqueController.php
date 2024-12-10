@@ -10,8 +10,11 @@ class StatistiqueController extends Controller
     public function stat1()
     {
         // Récupérer toutes les statistiques pour l'humidité
-        $humidites = Statistique::all()->pluck('humidite'); // Récupère toutes les valeurs de humidité
-        $moyHum = DB::table('statistiques')
+        $humidites = Statistique::orderBy('temps', 'desc')
+            ->take(10)
+            ->get(['humidite', 'temps']); // Récupère toutes les valeurs de humidité
+        
+        $moyHum = DB::table('Statistiques')
                 ->avg('humidite');
         return view('stat1', compact('humidites','moyHum'));
     }
@@ -20,8 +23,10 @@ class StatistiqueController extends Controller
     public function stat2()
     {
         // Récupérer toutes les statistiques pour la température
-        $temperatures = Statistique::all()->pluck('temperature'); // Récupère toutes les valeurs de température
-        $moyTemp = DB::table('statistiques')
+        $temperatures = Statistique::orderBy('temps', 'desc')
+            ->take(10)
+            ->get(['temperature', 'temps']); // Récupère toutes les valeurs de température
+        $moyTemp = DB::table('Statistiques')
                 ->avg('temperature');
         return view('stat2', compact('temperatures','moyTemp'));
     }

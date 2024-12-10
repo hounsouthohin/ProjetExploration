@@ -1,10 +1,9 @@
 import ressources.LCD1602 as LCD1602
 import RPi.GPIO as GPIO
 import time
+import datetime
 import mysql.connector
 from mysql.connector import Error
-
-"""mettre num de table pour statistique + mettre un WHERE sur les update du trigger"""
 
 DHTPIN = 17
 GPIO.setmode(GPIO.BCM)
@@ -176,11 +175,12 @@ try:
     while True:
         result = lireCapteur()
         compteur += 1
-
         if result:
             humidity, temperature = result
             print ("humidity: %s %%,  Temperature: %s °C" % (humidity, temperature))
-            query = (f"INSERT INTO Statistiques(humidite, temperature) VALUES ({humidity},{temperature})")
+            currTime = datetime.datetime.now()
+            currTime = currTime.strftime('%Y-%m-%d %H:%M:%S')
+            query = (f"INSERT INTO Statistiques(humidite, temperature, temps) VALUES ({humidity},{temperature},'{currTime}')")
             insert_data(connection, query)
         time.sleep(1)
         if compteur == 10:

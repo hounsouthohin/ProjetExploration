@@ -166,8 +166,8 @@
                 <tbody>
                     @foreach ($temperatures as $index => $temperature)
                         <tr>
-                            <td>{{ $index + 1 }}</td>
-                            <td>{{ $temperature }}°C</td>
+                            <td>{{ $temperature->temps}}</td>
+                            <td>{{ $temperature->temperature }}°C</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -201,14 +201,16 @@
 <script>
     const temperatureData = @json($temperatures);
 
+    const temperatures = temperatureData.map(data => data.temperature)
+
     const ctx = document.getElementById('temperatureChart').getContext('2d');
     new Chart(ctx, {
         type: 'line',
         data: {
-            labels: Array.from({ length: temperatureData.length }, (_, i) => `Jour ${i + 1}`),
+            labels: Array.from({ length: temperatures.length }, (_, i) => `Jour ${i + 1}`),
             datasets: [{
                 label: 'Température (°C)',
-                data: temperatureData,
+                data: temperatures,
                 borderColor: '#4a90e2',
                 backgroundColor: 'rgba(74, 144, 226, 0.2)',
                 tension: 0.4,

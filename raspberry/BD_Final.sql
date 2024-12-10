@@ -21,7 +21,8 @@ CREATE TABLE Utilisateur(
 CREATE TABLE Statistiques(
     noStat      INT NOT NULL    AUTO_INCREMENT PRIMARY KEY,
     humidite    INT NULL,
-    temperature INT NULL
+    temperature INT NULL,
+    temps       DATETIME NULL
 );
 
 CREATE TABLE Moyennes(

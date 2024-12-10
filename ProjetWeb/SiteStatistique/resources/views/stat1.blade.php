@@ -108,8 +108,8 @@
                 <tbody>
                     @foreach ($humidites as $index => $humidity)
                         <tr>
-                            <td>{{ $index + 1 }}</td>
-                            <td>{{ $humidity }}%</td>
+                            <td>{{ $humidity->temps}}</td>
+                            <td>{{ $humidity->humidite }}%</td>
                         </tr>
                     @endforeach
                 </tbody>
@@ -152,16 +152,18 @@
 <script>
     // Data for the chart
     const humidityData = @json($humidites);
+
+    const humidities = humidityData.map(data => data.humidite);
     
     // Create the chart
     const ctx = document.getElementById('humidityChart').getContext('2d');
     const humidityChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: Array.from({ length: humidityData.length }, (_, i) => `Jour ${i + 1}`),
+            labels: Array.from({ length: humidities.length }, (_, i) => `Jour ${i + 1}`),
             datasets: [{
                 label: 'Humidité (%)',
-                data: humidityData,
+                data: humidities,
                 borderColor: '#28a745',
                 backgroundColor: 'rgba(40, 167, 69, 0.2)',
                 borderWidth: 2,
