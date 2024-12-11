@@ -159,7 +159,7 @@
             <table class="table table-bordered text-center">
                 <thead>
                     <tr>
-                        <th>Id</th>
+                        <th>Datation du relevé</th>
                         <th>Température (°C)</th>
                     </tr>
                 </thead>
@@ -207,7 +207,7 @@
     new Chart(ctx, {
         type: 'line',
         data: {
-            labels: Array.from({ length: temperatures.length }, (_, i) => `Jour ${i + 1}`),
+            labels: Array.from({ length: temperatures.length }, (_, i) => `stat ${i + 1}`),
             datasets: [{
                 label: 'Température (°C)',
                 data: temperatures,

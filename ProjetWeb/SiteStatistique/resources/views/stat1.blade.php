@@ -101,7 +101,7 @@
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th>Id</th>
+                        <th>Datation du relevé</th>
                         <th>Humidité (%)</th>
                     </tr>
                 </thead>
@@ -160,7 +160,7 @@
     const humidityChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: Array.from({ length: humidities.length }, (_, i) => `Jour ${i + 1}`),
+            labels: Array.from({ length: humidities.length }, (_, i) => `stat ${i + 1}`),
             datasets: [{
                 label: 'Humidité (%)',
                 data: humidities,
